@@ -1,7 +1,6 @@
-import React from 'react'
 import { ServiceList } from './components/serviceList'
-import type { Service } from './components/serviceCard';
 import { useServices } from './hooks/useServices';
+import type { Service } from './types/service.types';
 
 export default function Sevices() {
 

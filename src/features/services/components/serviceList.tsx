@@ -1,5 +1,6 @@
 import { Users } from "lucide-react";
-import { ServiceCard, type Service } from "./serviceCard";
+import type { Service } from "../types/service.types";
+import { ServiceCard } from "./serviceCard";
 
 
 interface ServiceListProps {
