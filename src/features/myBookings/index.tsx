@@ -5,42 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useMyBookings } from "./hooks/useMyBookings";
 
-// Mock Data structure for UI representation
-const MOCK_BOOKINGS = [
-  {
-    id: "BK-101",
-    serviceName: "Home Cleaning",
-    category: "Cleaning",
-    date: "2026-09-05",
-    time: "09:00 AM",
-    price: 80,
-    currency: "NPR",
-    status: "Confirmed",
-    address: "Kathmandu, Nepal",
-  },
-  {
-    id: "BK-102",
-    serviceName: "AC Repair & Servicing",
-    category: "Maintenance",
-    date: "2026-09-10",
-    time: "02:00 PM",
-    price: 50,
-    currency: "NPR",
-    status: "Pending",
-    address: "Lalitpur, Nepal",
-  },
-  {
-    id: "BK-103",
-    serviceName: "Plumbing Inspection",
-    category: "Plumbing",
-    date: "2026-08-20",
-    time: "11:00 AM",
-    price: 40,
-    currency: "NPR",
-    status: "Completed",
-    address: "Kathmandu, Nepal",
-  },
-];
+
 
 export const MyBookingsPage = () => {
   const {bookings} = useMyBookings()

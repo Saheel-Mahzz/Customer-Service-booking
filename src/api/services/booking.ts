@@ -38,4 +38,16 @@ export const booking = {
     if (!res.ok) throw new Error('Failed to submit booking');
     return await res.json();
   },
+  getBookingById: async (bookingId: string): Promise<BookingResponse> => {
+    const res = await fetch(`${API_BASE_URL}/${bookingId}`);
+    
+    if (!res.ok) {
+      if (res.status === 404) {
+        throw new Error('Booking Bhetiyena (Not Found)');
+      }
+      throw new Error('Failed to fetch booking details');
+    }
+
+    return await res.json();
+  },
 };

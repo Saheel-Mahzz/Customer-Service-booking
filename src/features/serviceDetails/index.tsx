@@ -7,12 +7,32 @@ import { useState } from "react";
 import { BookingModal } from "./components/serviceBookingModel";
 import { useParams } from "react-router-dom";
 import { useServiceDetails } from "./hooks/useServiceDetails";
+import { useBooking } from "./hooks/useBooking";
 
 
 export const ServiceDetailsPage = () => {
     const [open,setOpen] = useState<boolean>(false)
     const { serviceId } = useParams<{ serviceId: string }>();
     const { service, loading, error } = useServiceDetails(serviceId);
+      const { createBooking, isLoading } = useBooking();
+
+      const handleConfirm = async () => {
+    try {
+      await createBooking({
+        serviceId: "1", // Dynamic badalna sakinchha
+        service_name: service?.name,
+        customer_name: service?.provider,
+        address: "Kathmandu",
+        booking_date: "2026-09-02",
+        time_slot: "09:00 AM",
+      });
+
+      alert("Booking successfully created on MockAPI!");
+      setOpen(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <div className="w-full min-h-screen bg-slate-50/50 pb-12">
       {/* Top Full-Width Header */}
@@ -106,7 +126,7 @@ export const ServiceDetailsPage = () => {
                   </p>
                 </div>
               </CardContent>
-                <BookingModal isOpen={open} onClose={setOpen}/>
+                <BookingModal isOpen={open} onClose={setOpen} handleConfirm={handleConfirm} isLoading={isLoading} />
             </Card>
           </div>
 

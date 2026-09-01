@@ -27,6 +27,6 @@ export const useMyBookings = () => {
     bookings,
     isLoading,
     error,
-    refetch: fetchBookings, // Naya booking banepachhi refetch garna milchha
+    refetch: fetchBookings, 
   };
 };

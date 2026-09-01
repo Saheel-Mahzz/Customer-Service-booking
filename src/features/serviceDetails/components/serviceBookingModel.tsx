@@ -3,32 +3,34 @@ import { Calendar as CalendarIcon, Clock, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useBooking } from "../hooks/useBooking";
+// import { useBooking } from "../hooks/useBooking";
 
 interface BookingModalProps {
   isOpen: boolean;
   onClose: (value:boolean) => void;
+  handleConfirm:()=>void
+  isLoading:boolean
 }
 
-export const BookingModal = ({ isOpen, onClose }: BookingModalProps) => {
-  const { createBooking, isLoading } = useBooking();
-  const handleConfirm = async () => {
-    try {
-      await createBooking({
-        serviceId: "1", // Dynamic badalna sakinchha
-        service_name: "Home Cleaning",
-        customer_name: "Alex",
-        address: "Kathmandu",
-        booking_date: "2026-09-02",
-        time_slot: "09:00 AM",
-      });
+export const BookingModal = ({ isOpen, onClose,handleConfirm,isLoading }: BookingModalProps) => {
+  // const { createBooking, isLoading } = useBooking();
+  // const handleConfirm = async () => {
+  //   try {
+  //     await createBooking({
+  //       serviceId: "1", // Dynamic badalna sakinchha
+  //       service_name: "Home Cleaning",
+  //       customer_name: "Alex",
+  //       address: "Kathmandu",
+  //       booking_date: "2026-09-02",
+  //       time_slot: "09:00 AM",
+  //     });
 
-      alert("Booking successfully created on MockAPI!");
-      onClose(false);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  //     alert("Booking successfully created on MockAPI!");
+  //     onClose(false);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
   return (
     <Dialog open={isOpen} onOpenChange={onClose} >
       <DialogContent className="sm:max-w-[425px] bg-slate-100">
