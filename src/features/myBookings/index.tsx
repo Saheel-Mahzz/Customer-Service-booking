@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useMyBookings } from "./hooks/useMyBookings";
 
 // Mock Data structure for UI representation
 const MOCK_BOOKINGS = [
@@ -42,6 +43,9 @@ const MOCK_BOOKINGS = [
 ];
 
 export const MyBookingsPage = () => {
+  const {bookings} = useMyBookings()
+
+  console.log('bookings',bookings)
   return (
     <div className="w-full min-h-screen bg-slate-50/50 pb-12">
       {/* Top Header */}
@@ -64,28 +68,28 @@ export const MyBookingsPage = () => {
           </TabsList>
 
           <TabsContent value="all" className="space-y-4">
-            {MOCK_BOOKINGS.map((booking) => (
+            {bookings.map((booking) => (
               <Card key={booking.id} className="border-slate-200 shadow-sm">
                 <CardHeader className="pb-3 flex flex-row items-center justify-between space-y-0">
                   <div className="space-y-1">
                     <span className="text-xs font-mono text-slate-400">{booking.id}</span>
                     <CardTitle className="text-lg font-bold text-slate-800">
-                      {booking.serviceName}
+                      {booking.service_name}
                     </CardTitle>
                   </div>
 
                   {/* Dynamic Status Badges */}
-                  {booking.status === "Confirmed" && (
+                  {booking.status === "confirmed" && (
                     <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 gap-1 hover:bg-emerald-50">
                       <CheckCircle2 className="w-3.5 h-3.5" /> Confirmed
                     </Badge>
                   )}
-                  {booking.status === "Pending" && (
+                  {booking.status === "pending" && (
                     <Badge className="bg-amber-50 text-amber-700 border-amber-200 gap-1 hover:bg-amber-50">
                       <Clock3 className="w-3.5 h-3.5" /> Pending
                     </Badge>
                   )}
-                  {booking.status === "Completed" && (
+                  {booking.status === "completed" && (
                     <Badge variant="secondary" className="bg-slate-100 text-slate-600 gap-1">
                       Completed
                     </Badge>
@@ -96,11 +100,11 @@ export const MyBookingsPage = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-100 text-xs">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4 text-slate-400 shrink-0" />
-                      <span>{booking.date}</span>
+                      <span>{booking.booking_date}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Clock className="w-4 h-4 text-slate-400 shrink-0" />
-                      <span>{booking.time}</span>
+                      <span>{booking.time_slot}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
