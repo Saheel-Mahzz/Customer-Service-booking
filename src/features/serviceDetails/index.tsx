@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useState } from "react";
+import { BookingModal } from "./components/serviceBookingModel";
 
 const MOCK_DETAIL = {
   id: "srv-1",
@@ -19,6 +21,7 @@ const MOCK_DETAIL = {
 };
 
 export const ServiceDetailsPage = () => {
+    const [open,setOpen] = useState<boolean>(false)
   return (
     <div className="w-full min-h-screen bg-slate-50/50 pb-12">
       {/* Top Full-Width Header */}
@@ -104,7 +107,7 @@ export const ServiceDetailsPage = () => {
                 <Separator />
 
                 <div className="space-y-3">
-                  <Button size="lg" className="w-full font-semibold">
+                  <Button size="lg" className="w-full font-semibold" onClick={()=>setOpen(true)}>
                     Book Appointment
                   </Button>
                   <p className="text-xs text-center text-slate-500">
@@ -112,6 +115,7 @@ export const ServiceDetailsPage = () => {
                   </p>
                 </div>
               </CardContent>
+                <BookingModal isOpen={open} onClose={setOpen}/>
             </Card>
           </div>
 
