@@ -5,23 +5,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { BookingModal } from "./components/serviceBookingModel";
+import { useParams } from "react-router-dom";
+import { useServiceDetails } from "./hooks/useServiceDetails";
 
-const MOCK_DETAIL = {
-  id: "srv-1",
-  name: "Home Cleaning",
-  category: "Cleaning",
-  provider: "Clean & Bright Co.",
-  description:
-    "Deep cleaning for apartments and standard houses including living room, kitchen, and sanitation of bathrooms. Our trained team uses eco-friendly supplies to restore fresh indoor quality.",
-  price: 80,
-  currency: "NPR",
-  durationMinutes: 120,
-  rating: 4.8,
-  availableDays: ["Monday", "Wednesday", "Friday"],
-};
 
 export const ServiceDetailsPage = () => {
     const [open,setOpen] = useState<boolean>(false)
+    const { serviceId } = useParams<{ serviceId: string }>();
+    const { service, loading, error } = useServiceDetails(serviceId);
   return (
     <div className="w-full min-h-screen bg-slate-50/50 pb-12">
       {/* Top Full-Width Header */}
@@ -35,20 +26,20 @@ export const ServiceDetailsPage = () => {
               <div className="flex items-center gap-2">
                 <Badge variant="outline" className="bg-slate-50 border-slate-200">
                   <Tag className="w-3 h-3 mr-1 text-slate-400" />
-                  {MOCK_DETAIL.category}
+                  {service?.category}
                 </Badge>
                 <div className="flex items-center gap-1 text-amber-500 text-sm font-semibold">
                   <Star className="w-4 h-4 fill-amber-400" />
-                  <span>{MOCK_DETAIL.rating}</span>
+                  <span>{service?.rating}</span>
                 </div>
               </div>
               <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
-                {MOCK_DETAIL.name}
+                {service?.name}
               </h1>
             </div>
             <div className="flex items-center gap-2 text-sm text-slate-500">
               <ShieldCheck className="w-5 h-5 text-emerald-600" />
-              <span>Provided by <strong className="text-slate-800 font-semibold">{MOCK_DETAIL.provider}</strong></span>
+              <span>Provided by <strong className="text-slate-800 font-semibold">{service?.provider}</strong></span>
             </div>
           </div>
         </div>
@@ -63,7 +54,7 @@ export const ServiceDetailsPage = () => {
             <div className="space-y-3">
               <h2 className="text-lg font-bold text-slate-800">Description</h2>
               <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
-                {MOCK_DETAIL.description}
+                {service?.description}
               </p>
             </div>
 
@@ -76,7 +67,7 @@ export const ServiceDetailsPage = () => {
                   <Clock className="w-5 h-5 text-slate-500 shrink-0" />
                   <div>
                     <p className="text-xs text-slate-500 font-medium">Duration</p>
-                    <p className="text-sm font-bold text-slate-800">{MOCK_DETAIL.durationMinutes} Minutes</p>
+                    <p className="text-sm font-bold text-slate-800">{service?.durationMinutes} Minutes</p>
                   </div>
                 </div>
 
@@ -85,7 +76,7 @@ export const ServiceDetailsPage = () => {
                   <div>
                     <p className="text-xs text-slate-500 font-medium">Availability</p>
                     <p className="text-sm font-bold text-slate-800">
-                      {MOCK_DETAIL.availableDays.join(", ")}
+                      {service?.availableDays.join(", ")}
                     </p>
                   </div>
                 </div>
@@ -100,7 +91,7 @@ export const ServiceDetailsPage = () => {
                 <div className="space-y-1">
                   <span className="text-xs text-slate-500 font-medium uppercase tracking-wider">Total Price</span>
                   <div className="text-3xl font-extrabold text-slate-900">
-                    {MOCK_DETAIL.currency} {MOCK_DETAIL.price}
+                    {service?.currency} {service?.price}
                   </div>
                 </div>
 

@@ -7,11 +7,11 @@ import {
   CardFooter 
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import type { ServiceCardProps } from "../types/service.types";
+import { Link } from "react-router-dom";
 
 
-export const ServiceCard = ({ service, onSelect }: ServiceCardProps) => {
+export const ServiceCard = ({ service }: ServiceCardProps) => {
   return (
     <Card className="flex flex-col justify-between border-slate-200/80 hover:border-slate-300 hover:shadow-lg transition-all duration-200 group">
       <CardHeader className="pb-3 space-y-2">
@@ -58,12 +58,10 @@ export const ServiceCard = ({ service, onSelect }: ServiceCardProps) => {
       </CardContent>
 
       <CardFooter className="pt-2">
-        <Button 
-          className="w-full font-semibold shadow-sm bg-black text-white group-hover:shadow transition-shadow cursor-pointer" 
-          onClick={() => onSelect(service)}
-        >
-          Details
-        </Button>
+   
+        <Link to={`/service-details/${service.id}`}>
+  Details
+</Link>
       </CardFooter>
     </Card>
   );

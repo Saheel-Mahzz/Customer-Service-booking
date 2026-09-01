@@ -8,7 +8,7 @@ path:'/',
 element:<Sevices/>
     },
     {
-        path:'/service-details',
+        path:'/service-details/:serviceId',
         element:<ServiceDetailsPage/>
     },
     {

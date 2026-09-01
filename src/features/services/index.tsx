@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom';
 import { ServiceList } from './components/serviceList';
 import { useServices } from './hooks/useServices';
 import type { Service } from './types/service.types';
@@ -5,8 +6,10 @@ import { ServiceFilters } from './components/serviceFilters';
 
 export default function Services() {
   // 1. URL bata search params read/write garne hook
+  const [searchParams, setSearchParams] = useSearchParams();
 
   // 2. Current search text URL bata extract garne
+  const search = searchParams.get('search') || '';
 
   // 3. Filter params custom hook ma pass garne
   const { services, loading, error } = useServices({ search });
