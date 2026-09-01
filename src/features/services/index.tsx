@@ -1,28 +1,13 @@
 import React from 'react'
 import { ServiceList } from './components/serviceList'
 import type { Service } from './components/serviceCard';
+import { useServices } from './hooks/useServices';
 
 export default function Sevices() {
-    const MOCK_SERVICES: Service[] = [
-  {
-    id: "1",
-    title: "Haircut & Styling",
-    price: 500,
-    description: "Professional haircut, hair washing, and modern styling.",
-  },
-  {
-    id: "2",
-    title: "Beard Grooming",
-    price: 300,
-    description: "Beard shaping, mustache trimming, and hot towel treatment.",
-  },
-  {
-    id: "3",
-    title: "Facial & Skincare",
-    price: 1200,
-    description: "Deep cleansing facial to refresh and clear your skin.",
-  },
-];
+
+    const {services,loading,error} = useServices() 
+
+    console.log('services',services)
 
 const handleSelectService = (selectedService: Service) => {
     console.log("Selected Service:", selectedService);
@@ -39,8 +24,8 @@ return (
 
       {/* Passing props down to ServiceList */}
       <ServiceList
-        services={MOCK_SERVICES}
-        isLoading={false}
+        services={services}
+        isLoading={loading}
         onSelectService={handleSelectService}
       />
     </div>
