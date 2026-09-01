@@ -3,6 +3,7 @@ import { Calendar as CalendarIcon, Clock, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useBooking } from "../hooks/useBooking";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -10,6 +11,24 @@ interface BookingModalProps {
 }
 
 export const BookingModal = ({ isOpen, onClose }: BookingModalProps) => {
+  const { createBooking, isLoading } = useBooking();
+  const handleConfirm = async () => {
+    try {
+      await createBooking({
+        serviceId: "1", // Dynamic badalna sakinchha
+        service_name: "Home Cleaning",
+        customer_name: "Alex",
+        address: "Kathmandu",
+        booking_date: "2026-09-02",
+        time_slot: "09:00 AM",
+      });
+
+      alert("Booking successfully created on MockAPI!");
+      onClose(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <Dialog open={isOpen} onOpenChange={onClose} >
       <DialogContent className="sm:max-w-[425px] bg-slate-100">
@@ -65,12 +84,13 @@ export const BookingModal = ({ isOpen, onClose }: BookingModalProps) => {
 
         {/* Footer Actions */}
         <DialogFooter className="gap-2 sm:gap-0">
-          <Button variant="outline" onClick={onClose}>
+          <Button variant="outline" onClick={()=>onClose(false)}>
             Cancel
           </Button>
-          <Button className="gap-2">
-            <CheckCircle2 className="w-4 h-4" /> Confirm Booking
-          </Button>
+         <Button className="gap-2" onClick={handleConfirm} disabled={isLoading}>
+  <CheckCircle2 className="w-4 h-4" /> 
+  {isLoading ? "Submitting..." : "Confirm Booking"}
+</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
