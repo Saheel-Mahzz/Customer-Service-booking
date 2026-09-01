@@ -2,7 +2,12 @@ import { bookingService } from '@/api/services/bookingService';
 import { useState, useEffect } from 'react';
 import type { Service } from '../types/service.types';
 
-export const useServices = () => {
+export interface ServiceFilterParams {
+  search?: string;
+  maxPrice?: number;
+}
+
+export const useServices = (params?: ServiceFilterParams) => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -14,11 +19,14 @@ export const useServices = () => {
       try {
         setLoading(true);
         setError(null);
-        const data = await bookingService.getServices();
+        
+        // Params pass garne
+        const data = await bookingService.getServices(params);
+        
         if (isMounted) {
           setServices(data);
         }
-      } catch (err) {
+      } catch (err: any) {
         if (isMounted) {
           setError(err.message || 'Failed to fetch services');
         }
@@ -32,9 +40,9 @@ export const useServices = () => {
     fetchServices();
 
     return () => {
-      isMounted = false; 
+      isMounted = false;
     };
-  }, []);
+  }, [params?.search, params?.maxPrice]); // Dependencies check!
 
   return { services, loading, error };
 };

@@ -1,7 +1,6 @@
 import { Users } from "lucide-react";
 import type { Service } from "../types/service.types";
 import { ServiceCard } from "./serviceCard";
-import { ServiceFilters } from "./serviceFilters";
 
 
 interface ServiceListProps {
@@ -14,7 +13,6 @@ export const ServiceList = ({ services, isLoading, onSelectService }: ServiceLis
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <ServiceFilters />
         {[1, 2, 3].map((n) => (
           <Users  key={n} className="h-[200px] w-full rounded-xl" />
         ))}
@@ -32,7 +30,6 @@ export const ServiceList = ({ services, isLoading, onSelectService }: ServiceLis
 
   return (
     <>
-    <ServiceFilters/>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {services.map((service) => (
         <ServiceCard 
