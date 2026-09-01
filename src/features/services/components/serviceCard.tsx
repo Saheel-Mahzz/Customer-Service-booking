@@ -59,7 +59,7 @@ export const ServiceCard = ({ service, onSelect }: ServiceCardProps) => {
 
       <CardFooter className="pt-2">
         <Button 
-          className="w-full font-semibold shadow-sm group-hover:shadow transition-shadow" 
+          className="w-full font-semibold shadow-sm group-hover:shadow transition-shadow cursor-pointer" 
           onClick={() => onSelect(service)}
         >
           Book Appointment
