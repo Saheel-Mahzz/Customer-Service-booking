@@ -1,10 +1,7 @@
-import { delay } from "../client/httpClient";
-import { mockServices } from "../mock/serviceData";
-
 
 export const bookingService = {
-  getServices: async () => {
-    await delay(300);
-    return mockServices;
+ getServices: async () => {
+    const res = await fetch('/api/v1/services');
+    return await res.json();
   },
 };
