@@ -16,8 +16,8 @@ export const useBookingDetail = (bookingId: string) => {
       try {
         const data = await bookingApi.getBookingById(bookingId);
         setBooking(data);
-      } catch (err: any) {
-        setError(err.message || "Error fetching booking detail");
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Error fetching booking detail");
       } finally {
         setIsLoading(false);
       }

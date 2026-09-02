@@ -37,12 +37,12 @@ export const useServices = (params?: ServiceFilterParams) => {
             error: null,
           });
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         if (isMounted) {
           setState({
             services: [],
             loading: false,
-            error: err.message || "Failed to fetch services",
+            error: err instanceof Error ? err.message : "Failed to fetch services",
           });
         }
       }

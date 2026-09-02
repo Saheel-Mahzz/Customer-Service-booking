@@ -13,8 +13,8 @@ export const useMyBookings = () => {
     try {
       const data = await bookingApi.getBookings();
       setBookings(data);
-    } catch (err: any) {
-      setError(err.message || "Failed to load bookings");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to load bookings");
     } finally {
       setIsLoading(false);
     }

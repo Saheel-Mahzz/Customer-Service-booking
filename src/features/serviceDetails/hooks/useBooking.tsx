@@ -17,8 +17,8 @@ export const useBooking = () => {
       });
 
       return response;
-    } catch (err: any) {
-      const msg = err.message || 'Booking complete garna sakiyena';
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Booking complete garna sakiyena';
       setError(msg);
       throw err;
     } finally {
