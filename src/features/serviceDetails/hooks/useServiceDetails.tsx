@@ -1,4 +1,4 @@
-import { bookingService } from '@/api/services/bookingService';
+import { servicesApi } from '@/api/services/servicesApi';
 import type { Service } from '@/features/services/types/service.types';
 import { useState, useEffect } from 'react';
 
@@ -8,7 +8,6 @@ export const useServiceDetails = (serviceId?: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Service ID nai pachhaidaina bhane fetch process skip garne
     if (!serviceId) {
       setLoading(false);
       return;
@@ -21,7 +20,7 @@ export const useServiceDetails = (serviceId?: string) => {
         setLoading(true);
         setError(null);
 
-        const data = await bookingService.getServiceById(serviceId);
+        const data = await servicesApi.getServiceById(serviceId);
 
         if (isMounted) {
           setService(data);
@@ -40,7 +39,6 @@ export const useServiceDetails = (serviceId?: string) => {
 
     fetchServiceDetail();
 
-    // Memory leak preventing cleanup
     return () => {
       isMounted = false;
     };

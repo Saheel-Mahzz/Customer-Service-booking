@@ -9,28 +9,34 @@ export class ApiError extends Error {
   }
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+const handleError = (error: AxiosError) => {
+  if (error.response) {
+    throw new ApiError(
+      error.response.statusText || "Request failed",
+      error.response.status
+    );
+  } else if (error.request) {
+    throw new ApiError("Network error occurred");
+  } else {
+    throw new ApiError(error.message || "Unexpected error occurred");
+  }
+};
+
 export const apiClient: AxiosInstance = axios.create({
-  timeout: 10000, 
+  baseURL: API_BASE_URL,
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
 });
+apiClient.interceptors.response.use((response) => response, handleError);
 
-apiClient.interceptors.response.use(
-  (response) => response,
-  (error: AxiosError) => {
-    if (error.response) {
-      throw new ApiError(
-        error.response.statusText || "Request failed",
-        error.response.status
-      );
-    } else if (error.request) {
-      throw new ApiError("Network error occurred");
-    } else {
-      throw new ApiError(error.message || "Unexpected error occurred");
-    }
-  }
-);
+export const staticClient: AxiosInstance = axios.create({
+  timeout: 10000,
+});
+staticClient.interceptors.response.use((response) => response, handleError);
 
 export async function httpGet<T>(url: string): Promise<T> {
   const response = await apiClient.get<T>(url);

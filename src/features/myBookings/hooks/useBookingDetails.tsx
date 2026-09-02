@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { booking, type BookingResponse } from "@/api/services/booking";
+import {  type BookingResponse } from "@/api/services/booking";
+import { bookingApi } from "@/api/services/bookingApi";
 
 export const useBookingDetail = (bookingId: string) => {
   const [bookings, setBooking] = useState<BookingResponse | null>(null);
@@ -13,7 +14,7 @@ export const useBookingDetail = (bookingId: string) => {
       setIsLoading(true);
       setError(null);
       try {
-        const data = await booking.getBookingById(bookingId);
+        const data = await bookingApi.getBookingById(bookingId);
         setBooking(data);
       } catch (err: any) {
         setError(err.message || "Error fetching booking detail");
@@ -25,5 +26,5 @@ export const useBookingDetail = (bookingId: string) => {
     fetchDetail();
   }, [bookingId]);
 
-  return { booking, isLoading, error };
+  return { bookings, isLoading, error };
 };

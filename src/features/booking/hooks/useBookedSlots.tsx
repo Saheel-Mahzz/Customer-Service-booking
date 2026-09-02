@@ -1,4 +1,4 @@
-import { booking } from "@/api/services/booking";
+import { bookingApi } from "@/api/services/bookingApi";
 import { useState, useEffect } from "react";
 
 export function useBookedSlots(serviceId: string | undefined, bookingDate: string) {
@@ -16,7 +16,7 @@ export function useBookedSlots(serviceId: string | undefined, bookingDate: strin
       setLoadingSlots(true);
       setError(null);
       try {
-        const allBookings = await booking.getBookings();
+        const allBookings = await bookingApi.getBookings();
 
         const slots = allBookings
           .filter(

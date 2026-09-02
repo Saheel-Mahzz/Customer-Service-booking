@@ -1,4 +1,5 @@
 import { booking, type BookingResponse } from "@/api/services/booking";
+import { bookingApi } from "@/api/services/bookingApi";
 import { useEffect, useState } from "react";
 
 export const useMyBookings = () => {
@@ -10,7 +11,7 @@ export const useMyBookings = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await booking.getBookings();
+      const data = await bookingApi.getBookings();
       setBookings(data);
     } catch (err: any) {
       setError(err.message || "Failed to load bookings");

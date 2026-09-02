@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { booking, type BookingPayload } from '@/api/services/booking';
+import {  type BookingPayload } from '@/api/services/booking';
+import { bookingApi } from '@/api/services/bookingApi';
 
 export const useBooking = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,8 +11,7 @@ export const useBooking = () => {
     setError(null);
 
     try {
-      // Direct POST request hitting MockAPI
-      const response = await booking.createBooking({
+      const response = await bookingApi.createBooking({
         ...payload,
         booking_number: `BK-${Math.random().toString(36).substring(2, 7).toUpperCase()}`,
         status: 'confirmed',

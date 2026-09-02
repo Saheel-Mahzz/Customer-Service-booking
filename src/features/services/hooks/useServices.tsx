@@ -1,6 +1,6 @@
-import { bookingService } from '@/api/services/bookingService';
 import { useState, useEffect } from 'react';
 import type { Service } from '../types/service.types';
+import { servicesApi } from '@/api/services/servicesApi';
 
 export interface ServiceFilterParams {
   search?: string;
@@ -28,7 +28,7 @@ export const useServices = (params?: ServiceFilterParams) => {
       }
 
       try {
-        const data = await bookingService.getServices(params);
+        const data = await servicesApi.getServices(params);
 
         if (isMounted) {
           setState({
