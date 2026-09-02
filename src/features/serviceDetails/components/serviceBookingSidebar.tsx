@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BookingModal } from "./serviceBookingModel";
 import type { Service } from "@/features/services/types/service.types";
@@ -10,27 +10,53 @@ interface ServiceBookingSidebarProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export const ServiceBookingSidebar = ({ service, isOpen, onOpenChange }: ServiceBookingSidebarProps) => {
+export const ServiceBookingSidebar = ({
+  service,
+  isOpen,
+  onOpenChange,
+}: ServiceBookingSidebarProps) => {
   return (
-    <Card className="border-slate-200 shadow-sm sticky top-6">
+    <Card className="sticky top-6 shadow-md border-slate-200/80 border-0">
       <CardContent className="p-6 space-y-6">
-        <div className="space-y-1">
-          <span className="text-xs text-slate-500 font-medium uppercase tracking-wider">
-            Total Price
+        
+        <div>
+          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            Pricing
           </span>
-          <div className="text-3xl font-extrabold text-slate-900">
-            {service?.currency} {service?.price}
+          <div className="mt-1 flex items-baseline justify-between">
+            <span className="text-3xl font-bold tracking-tight text-slate-900">
+              {service?.currency || "NPR"} {service?.price ?? "0"}
+            </span>
+            <span className="text-xs font-medium text-slate-500">
+              per session
+            </span>
           </div>
         </div>
 
         <Separator />
 
-        <div className="space-y-3">
-          <Button size="lg" className="w-full font-semibold" onClick={() => onOpenChange(true)}>
-            Book Appointment
-          </Button>
+        {/* Essential Perks */}
+        <div className="space-y-2.5 text-xs font-medium text-slate-600">
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            <span>Instant confirmation</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+           <span className="text-slate-600 font-medium text-xs">Safe & seamless payment</span>
+          </div>
         </div>
+        <Button 
+          size="lg" 
+          className="w-full font-semibold shadow-sm cursor-pointer" 
+          onClick={() => onOpenChange(true)}
+        >
+          Book Appointment
+        </Button>
       </CardContent>
+      <CardFooter className="bg-slate-50/50 px-6 py-3 border-t text-center justify-center">
+      <span className="text-[11px] text-slate-400 font-medium">Pay safely via credit card or online banking</span>
+      </CardFooter>
 
       <BookingModal isOpen={isOpen} onClose={onOpenChange} service={service} />
     </Card>

@@ -6,6 +6,7 @@ import { ServiceDetailsHeader } from "./components/serviceDetailHeader";
 import { useServiceDetails } from "./hooks/useServiceDetails";
 import { ServiceBookingSidebar } from "./components/serviceBookingSidebar";
 import { ServiceHighlightItem } from "./components/serviceHighlightItem";
+import { Card, CardContent } from "@/components/ui/card";
 
 
 export const ServiceDetailsPage = () => {
@@ -28,32 +29,40 @@ export const ServiceDetailsPage = () => {
 
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6 bg-white p-6 sm:p-8 rounded-xl border border-slate-200/80 shadow-sm">
-            <div className="space-y-3">
-              <h2 className="text-lg font-bold text-slate-800">Description</h2>
-              <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
-                {service.description}
-              </p>
-            </div>
+     <Card className="lg:col-span-2  shadow-sm ">
+  <CardContent className="p-6 sm:p-8 space-y-6">
+    
+    <section className="space-y-2">
+      <h2 className="text-base font-semibold text-slate-900">
+        About this service
+      </h2>
+      <p className="text-sm text-slate-600 leading-relaxed">
+        {service.description}
+      </p>
+    </section>
 
-            <Separator />
+    <Separator className="bg-slate-100" />
 
-            <div className="space-y-4">
-              <h2 className="text-lg font-bold text-slate-800">Service Highlights</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <ServiceHighlightItem
-                  icon={Clock}
-                  label="Duration"
-                  value={`${service.duration} Minutes`}
-                />
-                <ServiceHighlightItem
-                  icon={CalendarIcon}
-                  label="Availability"
-                  value={service.available_days.join(", ")}
-                />
-              </div>
-            </div>
-          </div>
+    <section className="space-y-3">
+      <h2 className="text-base font-semibold text-slate-900">
+        Service Details
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <ServiceHighlightItem
+          icon={Clock}
+          label="Duration"
+          value={`${service.duration} mins`}
+        />
+        <ServiceHighlightItem
+          icon={CalendarIcon}
+          label="Availability"
+          value={service.available_days.join(", ")}
+        />
+      </div>
+    </section>
+
+  </CardContent>
+</Card>
 
           <div className="lg:col-span-1">
             <ServiceBookingSidebar service={service} isOpen={open} onOpenChange={setOpen} />

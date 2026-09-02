@@ -12,7 +12,7 @@ export const ServiceDetailsHeader = ({ service, onBack }: ServiceDetailsHeaderPr
   return (
     <div className="w-full bg-white border-b border-slate-200">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <Button variant="ghost" size="sm" className="gap-2 text-slate-600 mb-2" onClick={onBack}>
+        <Button variant="ghost" size="sm" className="gap-2 text-slate-600 mb-2 cursor-pointer" onClick={onBack}>
           <ArrowLeft className="w-4 h-4" /> Back to Services
         </Button>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

@@ -14,6 +14,7 @@ import { useBookingForm } from "../hooks/useBookingForm";
 import { BookingDatePicker } from "./bookingDatePicker";
 import { TimeSlotPicker } from "./timeSlot";
 import { BookingSummary } from "./bookingSummary";
+import { BookingFormField } from "./bookingFormField";
 
 
 interface BookingModalProps {
