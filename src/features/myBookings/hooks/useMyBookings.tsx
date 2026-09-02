@@ -1,5 +1,5 @@
-import { booking, type BookingResponse } from "@/api/services/booking";
 import { bookingApi } from "@/api/services/bookingApi";
+import type { BookingResponse } from "@/features/booking/types/booking.types";
 import { useEffect, useState } from "react";
 
 export const useMyBookings = () => {

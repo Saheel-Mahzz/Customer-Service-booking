@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import {  type BookingPayload } from '@/api/services/booking';
 import { bookingApi } from '@/api/services/bookingApi';
+import type { BookingPayload } from '../types/booking.types';
 
 export const useBooking = () => {
   const [isLoading, setIsLoading] = useState(false);

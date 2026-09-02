@@ -34,7 +34,25 @@
   * **Wouter:** Extremely lightweight, but lacks deeper nested routing features and ecosystem support needed as the app scales.
   * **Custom State Navigation:** Fails to support browser history (back/forward buttons) and clean URL bookmarking.
 
-  ## Decision 3: Unit & Component Testing Tool (Vitest)
+  ## Decision 3 : URL-Based Query Parameters for State Management (Filter & Search)
+
+* **What was chosen?**
+  Used **URL Query Parameters** (`useSearchParams` / React Router) to store active filter, search, and pagination states instead of local component state (`useState`).
+
+* **Why was it chosen?**
+  * **State Persistence on Reload:** Preserves active filters and active views even when the user reloads/refreshes the page.
+  * **Shareable & Bookmarkable URLs:** Users can copy-paste the URL (e.g., `?category=cleaning&page=2`) and share exact filtered views directly with others.
+  * **Production-Ready API Integration:** Aligns with standard RESTful backend patterns, making future integration with real query-based APIs seamless.
+
+* **What alternatives were considered?**
+  1. Local React component state (`useState`).
+  2. Global client state management (e.g., Zustand or Redux).
+
+* **Why were the alternatives rejected?**
+  * **Local State (`useState`):** State is immediately lost upon page refresh, breaking the browser back/forward buttons.
+  * **Global State (Zustand/Redux):** Over-engineers filter tracking and still fails to make specific filtered states bookmarkable or shareable via URL.
+
+  ## Decision 4: Unit & Component Testing Tool (Vitest)
 
 * **What was chosen?**
   **Vitest** for running unit and component tests.
@@ -51,7 +69,7 @@
   * **Jest:** Requires heavy Babel transform setups and dual-configuration to work smoothly alongside Vite projects.
   * **Manual Testing:** High risk of regression bugs when code updates or new features are added.
 
-  ## Decision 4: UI Display Strategy (Table View vs Card View)
+  ## Decision 5: UI Display Strategy (Table View vs Card View)
 
 * **What was chosen?**
   Used **Table View** for `my-bookings` and **Card View** for `service-listing`.
@@ -68,7 +86,7 @@
   * **Cards for Bookings:** Takes up too much vertical space and makes comparing structured booking data slow for the user.
   * **Tables for Service Listing:** Looks visually plain and doesn't showcase images or service highlights effectively.
   
-  ## Decision 5: Directory Structure (Feature-Based Setup)
+  ## Decision 6: Directory Structure (Feature-Based Setup)
 
 * **What was chosen?**
   Organized code by features inside `src/features/<feature-name>` instead of generic file layers (`src/components`, `src/hooks`).
