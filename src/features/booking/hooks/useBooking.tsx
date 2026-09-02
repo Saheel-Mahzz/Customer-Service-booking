@@ -10,6 +10,7 @@ export const useBooking = () => {
     setError(null);
 
     try {
+      // Direct POST request hitting MockAPI
       const response = await booking.createBooking({
         ...payload,
         booking_number: `BK-${Math.random().toString(36).substring(2, 7).toUpperCase()}`,
