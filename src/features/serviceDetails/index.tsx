@@ -7,32 +7,14 @@ import { useState } from "react";
 import { BookingModal } from "./components/serviceBookingModel";
 import { useParams } from "react-router-dom";
 import { useServiceDetails } from "./hooks/useServiceDetails";
-import { useBooking } from "./hooks/useBooking";
 
 
 export const ServiceDetailsPage = () => {
     const [open,setOpen] = useState<boolean>(false)
     const { serviceId } = useParams<{ serviceId: string }>();
     const { service, loading, error } = useServiceDetails(serviceId);
-      const { createBooking, isLoading } = useBooking();
 
-      const handleConfirm = async () => {
-    try {
-      await createBooking({
-        serviceId: "1", // Dynamic badalna sakinchha
-        service_name: service?.name,
-        customer_name: service?.provider,
-        address: "Kathmandu",
-        booking_date: "2026-09-02",
-        time_slot: "09:00 AM",
-      });
 
-      alert("Booking successfully created on MockAPI!");
-      setOpen(false);
-    } catch (err) {
-      console.error(err);
-    }
-  };
   return (
     <div className="w-full min-h-screen bg-slate-50/50 pb-12">
       {/* Top Full-Width Header */}
@@ -87,7 +69,7 @@ export const ServiceDetailsPage = () => {
                   <Clock className="w-5 h-5 text-slate-500 shrink-0" />
                   <div>
                     <p className="text-xs text-slate-500 font-medium">Duration</p>
-                    <p className="text-sm font-bold text-slate-800">{service?.durationMinutes} Minutes</p>
+                    <p className="text-sm font-bold text-slate-800">{service?.duration} Minutes</p>
                   </div>
                 </div>
 
@@ -96,7 +78,7 @@ export const ServiceDetailsPage = () => {
                   <div>
                     <p className="text-xs text-slate-500 font-medium">Availability</p>
                     <p className="text-sm font-bold text-slate-800">
-                      {service?.availableDays.join(", ")}
+                      {service?.available_days.join(", ")}
                     </p>
                   </div>
                 </div>
@@ -126,7 +108,7 @@ export const ServiceDetailsPage = () => {
                   </p>
                 </div>
               </CardContent>
-                <BookingModal isOpen={open} onClose={setOpen} handleConfirm={handleConfirm} isLoading={isLoading} />
+                <BookingModal isOpen={open} onClose={setOpen} service={service} />
             </Card>
           </div>
 

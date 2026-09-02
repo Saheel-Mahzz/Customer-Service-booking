@@ -2,52 +2,85 @@
   {
     "id": "srv-1",
     "name": "Home Cleaning",
+    "provider": "prov-1",
     "category": "Cleaning",
     "description": "Deep cleaning for apartments and standard houses including living room and kitchen.",
     "price": 80,
-    "durationMinutes": 120,
-    "availableDays": [
+    "duration": 120,
+    "available_days": [
       "Monday",
       "Wednesday",
       "Friday"
-    ]
+    ],
+    "available_time_slots": [
+    "09:00 AM",
+    "11:00 AM",
+    "02:00 PM",
+    "04:00 PM"
+  ],
+    "rating": "4.5"
   },
   {
     "id": "srv-2",
     "name": "AC Repair & Servicing",
+    "provider": "prov-2",
     "category": "Maintenance",
     "description": "Filter cleaning, gas refill, and general checkup for split and window ACs.",
     "price": 50,
-    "durationMinutes": 60,
-    "availableDays": [
+    "duration": 60,
+    "available_days": [
       "Everyday"
-    ]
+    ],
+        "available_time_slots": [
+    "09:00 AM",
+    "11:00 AM",
+    "02:00 PM",
+    "04:00 PM"
+  ],
+    "rating": "4.7"
   },
   {
     "id": "srv-3",
     "name": "Plumbing Inspection",
     "category": "Plumbing",
+    "provider": "prov-3",
     "description": "Fixing pipe leaks, bathroom fitting installations, and tap repairs.",
     "price": 40,
-    "durationMinutes": 45,
-    "availableDays": [
+    "duration": 45,
+    "available_days": [
       "Monday",
       "Tuesday",
       "Thursday",
       "Saturday"
-    ]
+    ],
+        "available_time_slots": [
+    "09:00 AM",
+    "11:00 AM",
+    "02:00 PM",
+    
+    "04:00 PM"
+  ],
+    "rating": "4.3"
   },
   {
     "id": "srv-4",
     "name": "Electrical Wiring Check",
+    "provider": "prov-4",
     "category": "Electrical",
     "description": "Short circuit troubleshooting, switchboard installations, and safety checks.",
     "price": 60,
-    "durationMinutes": 90,
-    "availableDays": [
+    "duration": 90,
+        "available_time_slots": [
+    "09:00 AM",
+    "11:00 AM",
+    "02:00 PM",
+    "04:00 PM"
+  ],
+    "available_days": [
       "Tuesday",
       "Thursday",
       "Sunday"
-    ]
+    ],
+    "rating": "4.6"
   }
 ]

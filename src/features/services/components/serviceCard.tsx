@@ -21,7 +21,7 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
             {service.category}
           </Badge>
           <span className="text-xl font-bold text-slate-900">
-            ${service.price}
+            Rs.{service.price}
           </span>
         </div>
 
@@ -38,20 +38,20 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
         <div className="pt-2 border-t border-slate-100 space-y-2 text-xs font-medium text-slate-500">
           <div className="flex items-center gap-2">
             <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            <span>{service.durationMinutes} mins</span>
+            <span>{service.duration} mins</span>
           </div>
 
           <div className="flex items-start gap-2">
             <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
             <div className="flex flex-wrap gap-1">
-              {service.availableDays.map((day) => (
+              {service?.available_days ? service?.available_days.map((day) => (
                 <span 
                   key={day} 
                   className="bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded text-[10px] font-semibold"
                 >
                   {day}
                 </span>
-              ))}
+              )) : '-'}
             </div>
           </div>
         </div>

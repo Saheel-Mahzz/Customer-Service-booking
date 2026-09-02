@@ -4,8 +4,12 @@ export interface Service {
   category?: string;
   description?: string;
   price: number;
-  durationMinutes?: number;
-  availableDays?: string[];
+  duration?: number;
+  available_days?: string[];
+  rating?:number
+  provider?:string
+  currency?:string
+  available_time_slots?: string[];
 }
 
 export interface ServiceCardProps {
