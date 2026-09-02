@@ -7,7 +7,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview" ,
+    "test":"vitest",
+    "test:ui":"vitest --ui",
+    "test:run":"vitest run",
+    "coverage":"vitest run --coverage"
+
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
