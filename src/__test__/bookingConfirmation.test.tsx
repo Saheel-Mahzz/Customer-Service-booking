@@ -2,9 +2,12 @@ import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useBookingForm } from "@/features/booking/hooks/useBookingForm";
 
-const createBooking = vi.fn();
-const toastSuccess = vi.fn();
-const toastError = vi.fn();
+// vi.hoisted() le yi variable haru pani vi.mock() jasari top ma hoisted garcha
+const { createBooking, toastSuccess, toastError } = vi.hoisted(() => ({
+  createBooking: vi.fn(),
+  toastSuccess: vi.fn(),
+  toastError: vi.fn(),
+}));
 
 vi.mock("@/features/booking/hooks/useBooking", () => ({
   useBooking: () => ({ createBooking, isLoading: false }),
