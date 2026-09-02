@@ -8,10 +8,12 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Calendar } from "@/components/ui/calendar";
+
 import { CalendarIcon, Clock, User, MapPin, CheckCircle2 } from "lucide-react";
 import type { Service } from "@/features/services/types/service.types";
 import { useBooking } from "../hooks/useBooking";
-
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 interface BookingFormData {
   bookingDate: string;
@@ -27,17 +29,31 @@ interface BookingModalProps {
 }
 
 const INITIAL_FORM_STATE: BookingFormData = {
-  bookingDate: "2026-09-02",
+  bookingDate: "",
   selectedSlot: "",
   customerName: "",
   address: "",
 };
 
+const DAY_NAMES = [
+  "Sunday", "Monday", "Tuesday", "Wednesday",
+  "Thursday", "Friday", "Saturday",
+];
+
+// Format Date -> "YYYY-MM-DD" (local, no timezone shift)
+function toDateString(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) => {
   const { createBooking, isLoading } = useBooking();
 
-  // Single State Object Pattern
   const [formData, setFormData] = useState<BookingFormData>(INITIAL_FORM_STATE);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   if (!service) return null;
 
@@ -46,6 +62,23 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
       ...prev,
       [field]: value,
     }));
+  };
+
+  const isDayAvailable = (date: Date) => {
+    if (!service.available_days) return false;
+    if (service.available_days.includes("Everyday")) return true;
+    const dayName = DAY_NAMES[date.getDay()];
+    return service.available_days.includes(dayName);
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    setSelectedDate(date);
+    if (date) {
+      handleChange("bookingDate", toDateString(date));
+      setCalendarOpen(false);
+    } else {
+      handleChange("bookingDate", "");
+    }
   };
 
   const handleConfirm = async () => {
@@ -60,18 +93,19 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
       });
 
       alert("Booking successfully created!");
-      
+
       setFormData(INITIAL_FORM_STATE);
+      setSelectedDate(undefined);
       onClose(false);
     } catch (err) {
       console.error("Failed to create booking:", err);
     }
   };
 
-  // Form Validation Check
   const isFormValid = Boolean(
-    formData.selectedSlot && 
-    formData.customerName.trim() && 
+    formData.bookingDate &&
+    formData.selectedSlot &&
+    formData.customerName.trim() &&
     formData.address.trim()
   );
 
@@ -87,12 +121,33 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
             <label className="text-xs font-semibold text-slate-600 flex items-center gap-1.5">
               <CalendarIcon className="w-4 h-4 text-slate-400" /> Select Date
             </label>
-            <input
-              type="date"
-              value={formData.bookingDate}
-              onChange={(e) => handleChange("bookingDate", e.target.value)}
-              className="w-full border border-slate-200 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-white"
-            />
+
+            <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+              <PopoverTrigger asChild className=' w-full'>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-3/4 justify-start text-left font-normal bg-white"
+                >
+                  <CalendarIcon className="w-4 h-4 mr-2 text-slate-400" />
+                  {selectedDate ? toDateString(selectedDate) : "Pick a date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="bg-white p-0" align="center">
+                <Calendar
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={handleDateSelect}
+                  disabled={(date) => {
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    if (date < today) return true;
+                    return !isDayAvailable(date);
+                  }}
+                  className="w-full"
+                />
+              </PopoverContent>
+            </Popover>
           </div>
 
           <div className="space-y-1.5">
