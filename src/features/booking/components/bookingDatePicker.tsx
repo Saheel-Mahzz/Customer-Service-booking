@@ -11,6 +11,7 @@ interface BookingDatePickerProps {
   availableDays: string[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  error?: string;
 }
 
 export const BookingDatePicker = ({
@@ -19,6 +20,7 @@ export const BookingDatePicker = ({
   availableDays,
   open,
   onOpenChange,
+  error,
 }: BookingDatePickerProps) => {
   return (
     <div className="space-y-1.5">
@@ -31,7 +33,10 @@ export const BookingDatePicker = ({
           <Button
             type="button"
             variant="outline"
-            className="w-3/4 justify-start text-left font-normal bg-white"
+            aria-invalid={Boolean(error)}
+            className={`w-3/4 justify-start text-left font-normal bg-white ${
+              error ? "border-red-500" : ""
+            }`}
           >
             <CalendarIcon className="w-4 h-4 mr-2 text-slate-400" />
             {selectedDate ? toDateString(selectedDate) : "Pick a date"}
@@ -47,6 +52,7 @@ export const BookingDatePicker = ({
           />
         </PopoverContent>
       </Popover>
+      {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   );
 };

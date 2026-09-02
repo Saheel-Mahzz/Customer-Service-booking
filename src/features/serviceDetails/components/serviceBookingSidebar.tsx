@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { BookingModal } from "./serviceBookingModel";
+import { BookingModal } from "@/features/booking/components/bookingModal";
+
 import type { Service } from "@/features/services/types/service.types";
 
 interface ServiceBookingSidebarProps {

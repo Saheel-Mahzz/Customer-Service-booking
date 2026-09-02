@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { ServiceList } from './components/serviceList';
 import { useServices } from './hooks/useServices';
 import { ServiceFilters } from './components/serviceFilters';
@@ -17,7 +17,15 @@ export default function Services() {
           Choose a service below to start your booking process.
         </p>
       </header>
-          <ServiceFilters/>
+      <div className="flex items-center justify-between gap-4 mb-6">
+        <ServiceFilters/>
+        <Link
+          to="/my-bookings"
+          className="text-sm font-semibold text-primary hover:underline whitespace-nowrap"
+        >
+          My Bookings
+        </Link>
+      </div>
       {error && (
         <div className="p-4 mb-4 text-sm text-red-500 bg-red-50 rounded-md">
           {error}

@@ -6,15 +6,21 @@ interface TimeSlotPickerProps {
   bookedSlots: string[];
   selectedSlot: string;
   onSelectSlot: (slot: string) => void;
+  error?: string;
 }
 
-export const TimeSlotPicker = ({ slots, bookedSlots, selectedSlot, onSelectSlot }: TimeSlotPickerProps) => {
+export const TimeSlotPicker = ({ slots, bookedSlots, selectedSlot, onSelectSlot, error }: TimeSlotPickerProps) => {
   return (
     <div className="space-y-1.5">
       <label className="text-xs font-semibold text-slate-600 flex items-center gap-1.5">
         <Clock className="w-4 h-4 text-slate-400" /> Select Time Slot
       </label>
-      <div className="grid grid-cols-2 gap-2">
+      <div
+        className={`grid grid-cols-2 gap-2 rounded-md ${
+          error ? "border border-red-500 p-1" : ""
+        }`}
+        aria-invalid={Boolean(error)}
+      >
         {slots?.map((slot) => {
           const isSelected = selectedSlot === slot;
           const isBooked = bookedSlots.includes(slot);
@@ -39,6 +45,7 @@ export const TimeSlotPicker = ({ slots, bookedSlots, selectedSlot, onSelectSlot 
           );
         })}
       </div>
+      {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   );
 };

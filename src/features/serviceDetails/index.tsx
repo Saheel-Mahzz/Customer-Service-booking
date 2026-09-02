@@ -1,7 +1,7 @@
 import { Clock, Calendar as CalendarIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { ServiceDetailsHeader } from "./components/serviceDetailHeader";
 import { useServiceDetails } from "./hooks/useServiceDetails";
 import { ServiceBookingSidebar } from "./components/serviceBookingSidebar";
@@ -26,6 +26,11 @@ export const ServiceDetailsPage = () => {
   return (
     <div className="w-full min-h-screen bg-slate-50/50 pb-12">
       <ServiceDetailsHeader service={service} onBack={() => navigate(-1)} />
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 text-right">
+        <Link to="/my-bookings" className="text-sm font-semibold text-primary hover:underline">
+          My Bookings
+        </Link>
+      </div>
 
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -56,7 +61,7 @@ export const ServiceDetailsPage = () => {
         <ServiceHighlightItem
           icon={CalendarIcon}
           label="Availability"
-          value={service.available_days.join(", ")}
+          value={(service.available_days ?? []).join(", ")}
         />
       </div>
     </section>

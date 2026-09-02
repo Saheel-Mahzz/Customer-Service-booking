@@ -30,7 +30,7 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
     calendarOpen,
     setCalendarOpen,
     isLoading,
-    isFormValid,
+    validationErrors,
     handleChange,
     handleDateSelect,
     handleConfirm,
@@ -42,7 +42,7 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] bg-slate-100 max-h-[90vh] overflow-y-auto">
+      <DialogContent className="w-[95vw] sm:max-w-xl bg-slate-100">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">Book {service.name}</DialogTitle>
         </DialogHeader>
@@ -51,7 +51,8 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
           <BookingDatePicker
             selectedDate={selectedDate}
             onSelectDate={handleDateSelect}
-            availableDays={service.available_days}
+            availableDays={service.available_days ?? []}
+            error={validationErrors.booking_date?.[0]}
             open={calendarOpen}
             onOpenChange={setCalendarOpen}
           />
@@ -61,6 +62,7 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
             bookedSlots={bookedSlots}
             selectedSlot={formData.selected_slot}
             onSelectSlot={(slot) => handleChange("selected_slot", slot)}
+            error={validationErrors.selected_slot?.[0]}
           />
 
           <div className="space-y-3 pt-1">
@@ -70,6 +72,7 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
               placeholder="e.g. Alex Shrestha"
               value={formData.customer_name}
               onChange={(value) => handleChange("customer_name", value)}
+              error={validationErrors.customer_name?.[0]}
             />
             <BookingFormField
               icon={MapPin}
@@ -77,6 +80,7 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
               placeholder="e.g. Baneshwor, Kathmandu"
               value={formData.address}
               onChange={(value) => handleChange("address", value)}
+              error={validationErrors.address?.[0]}
             />
           </div>
 
@@ -89,7 +93,7 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
           <Button variant="outline" onClick={() => onClose(false)}>
             Cancel
           </Button>
-          <Button className="gap-2" onClick={handleConfirm} disabled={isLoading || !isFormValid}>
+          <Button className="gap-2" onClick={handleConfirm} disabled={isLoading }>
             <CheckCircle2 className="w-4 h-4" />
             {isLoading ? "Submitting..." : "Confirm Booking"}
           </Button>

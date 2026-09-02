@@ -1,4 +1,3 @@
-import { Users } from "lucide-react";
 import type { Service } from "../types/service.types";
 import { ServiceCard } from "./serviceCard";
 
@@ -13,7 +12,7 @@ export const ServiceList = ({ services, isLoading }: ServiceListProps) => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {[1, 2, 3].map((n) => (
-          <Users  key={n} className="h-[200px] w-full rounded-xl" />
+          <div key={n} className="h-[200px] w-full rounded-xl bg-slate-200 animate-pulse" />
         ))}
       </div>
     );
