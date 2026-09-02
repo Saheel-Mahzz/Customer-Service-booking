@@ -16,6 +16,7 @@ import { useBooking } from "../hooks/useBooking";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 import { useBookedSlots } from "../hooks/useBookedSlots";
+import { toDateString } from "@/utils/dateUtils";
 
 interface BookingFormData {
   bookingDate: string;
@@ -41,13 +42,6 @@ const DAY_NAMES = [
   "Sunday", "Monday", "Tuesday", "Wednesday",
   "Thursday", "Friday", "Saturday",
 ];
-
-function toDateString(date: Date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
 
 export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) => {
   const [formData, setFormData] = useState<BookingFormData>(INITIAL_FORM_STATE);
@@ -80,7 +74,7 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
     if (date) {
-      handleChange("bookingDate", toDateString(date));
+      handleChange("bookingDate", toDateString( date));
       setCalendarOpen(false);
     } else {
       handleChange("bookingDate", "");
