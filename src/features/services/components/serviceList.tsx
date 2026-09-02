@@ -6,10 +6,9 @@ import { ServiceCard } from "./serviceCard";
 interface ServiceListProps {
   services: Service[];
   isLoading: boolean;
-  onSelectService: (service: Service) => void;
 }
 
-export const ServiceList = ({ services, isLoading, onSelectService }: ServiceListProps) => {
+export const ServiceList = ({ services, isLoading }: ServiceListProps) => {
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -35,7 +34,6 @@ export const ServiceList = ({ services, isLoading, onSelectService }: ServiceLis
         <ServiceCard 
           key={service.id} 
           service={service} 
-          onSelect={onSelectService} 
         />
       ))}
     </div>

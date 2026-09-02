@@ -6,33 +6,44 @@ export interface ServiceFilterParams {
   search?: string;
   maxPrice?: number;
 }
+interface ServicesState {
+  services: Service[];
+  loading: boolean;
+  error: string | null;
+}
 
 export const useServices = (params?: ServiceFilterParams) => {
-  const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [state, setState] = useState<ServicesState>({
+    services: [],
+    loading: true,
+    error: null,
+  });
 
   useEffect(() => {
     let isMounted = true;
 
     const fetchServices = async () => {
+      if (isMounted) {
+        setState((prev) => ({ ...prev, loading: true, error: null }));
+      }
+
       try {
-        setLoading(true);
-        setError(null);
-        
-        // Params pass garne
         const data = await bookingService.getServices(params);
-        
+
         if (isMounted) {
-          setServices(data);
+          setState({
+            services: data,
+            loading: false,
+            error: null,
+          });
         }
       } catch (err: any) {
         if (isMounted) {
-          setError(err.message || 'Failed to fetch services');
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
+          setState({
+            services: [],
+            loading: false,
+            error: err.message || "Failed to fetch services",
+          });
         }
       }
     };
@@ -42,7 +53,7 @@ export const useServices = (params?: ServiceFilterParams) => {
     return () => {
       isMounted = false;
     };
-  }, [params?.search, params?.maxPrice]); // Dependencies check!
+  }, [params?.search, params?.maxPrice]);
 
-  return { services, loading, error };
+  return state; 
 };

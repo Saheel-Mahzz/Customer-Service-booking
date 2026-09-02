@@ -8,11 +8,9 @@ const CATEGORIES = ["All", "Cleaning", "Maintenance", "Plumbing", "Electrical"];
 export const ServiceFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // URL bata exact current filters line
   const currentSearch = searchParams.get("search") || "";
   const currentCategory = searchParams.get("category") || "All";
 
-  // Search input typing handler
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setSearchParams((prev) => {
@@ -25,7 +23,6 @@ export const ServiceFilters = () => {
     });
   };
 
-  // Category pill click handler
   const handleCategoryClick = (category: string) => {
     setSearchParams((prev) => {
       if (category !== "All") {
@@ -39,7 +36,6 @@ export const ServiceFilters = () => {
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-      {/* Search Input UI */}
       <div className="relative w-full sm:w-80">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
         <Input
@@ -51,7 +47,6 @@ export const ServiceFilters = () => {
         />
       </div>
 
-      {/* Category Filter Pills UI */}
       <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
         {CATEGORIES.map((cat) => {
           const isActive = currentCategory === cat;
