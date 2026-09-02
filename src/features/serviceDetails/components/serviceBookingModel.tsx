@@ -14,6 +14,8 @@ import { CalendarIcon, Clock, User, MapPin, CheckCircle2 } from "lucide-react";
 import type { Service } from "@/features/services/types/service.types";
 import { useBooking } from "../hooks/useBooking";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { toast } from "sonner";
+import { useBookedSlots } from "../hooks/useBookedSlots";
 
 interface BookingFormData {
   bookingDate: string;
@@ -40,7 +42,6 @@ const DAY_NAMES = [
   "Thursday", "Friday", "Saturday",
 ];
 
-// Format Date -> "YYYY-MM-DD" (local, no timezone shift)
 function toDateString(date: Date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -49,13 +50,16 @@ function toDateString(date: Date) {
 }
 
 export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) => {
-  const { createBooking, isLoading } = useBooking();
-
   const [formData, setFormData] = useState<BookingFormData>(INITIAL_FORM_STATE);
+  const { createBooking, isLoading } = useBooking();
+  const {bookedSlots}= useBookedSlots(service?.id,formData?.bookingDate)
+
+
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [calendarOpen, setCalendarOpen] = useState(false);
 
   if (!service) return null;
+  
 
   const handleChange = (field: keyof BookingFormData, value: string) => {
     setFormData((prev) => ({
@@ -63,6 +67,8 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
       [field]: value,
     }));
   };
+
+
 
   const isDayAvailable = (date: Date) => {
     if (!service.available_days) return false;
@@ -92,13 +98,14 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
         time_slot: formData.selectedSlot,
       });
 
-      alert("Booking successfully created!");
+      toast.success('Booking succesfully created!')
 
       setFormData(INITIAL_FORM_STATE);
       setSelectedDate(undefined);
       onClose(false);
     } catch (err) {
       console.error("Failed to create booking:", err);
+      toast.error("Failed to create booking. Please try again.");
     }
   };
 
@@ -154,23 +161,32 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
             <label className="text-xs font-semibold text-slate-600 flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-slate-400" /> Select Time Slot
             </label>
-            <div className="grid grid-cols-2 gap-2">
-              {service.available_time_slots?.map((slot) => {
-                const isSelected = formData.selectedSlot === slot;
-                return (
-                  <Button
-                    key={slot}
-                    type="button"
-                    variant={isSelected ? "default" : "outline"}
-                    size="sm"
-                    className="text-xs"
-                    onClick={() => handleChange("selectedSlot", slot)}
-                  >
-                    {slot}
-                  </Button>
-                );
-              })}
-            </div>
+          <div className="grid grid-cols-2 gap-2">
+  {service.available_time_slots?.map((slot) => {
+    const isSelected = formData.selectedSlot === slot;
+    const isBooked = bookedSlots.includes(slot);
+
+    return (
+      <Button
+        key={slot}
+        type="button"
+        variant={isSelected ? "outline" : "default"}
+        size="sm"
+        disabled={isBooked}
+        onClick={() => handleChange("selectedSlot", slot)}
+        className={
+          
+          isBooked
+            ? "text-xs bg-red-50 border-red-200 text-red-500 line-through hover:bg-red-50 cursor-not-allowed disabled:opacity-100"
+            : "text-xs cursor-pointer bg-gray-200"
+        }
+      >
+        {slot}
+        {isBooked && <span className="ml-1 text-[10px]">(Booked)</span>}
+      </Button>
+    );
+  })}
+</div>
           </div>
 
           {/* 3. Customer Info Section */}
