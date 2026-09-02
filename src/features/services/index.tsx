@@ -11,7 +11,7 @@ export default function Services() {
   const { services, loading, error } = useServices({ search });
   return (
     <div className="container mx-auto px-4 py-8">
-      <header className="mb-8">
+      <header className="mb-8 text-center">
         <h1 className="text-3xl font-bold tracking-tight">Our Services</h1>
         <p className="text-muted-foreground mt-2">
           Choose a service below to start your booking process.
