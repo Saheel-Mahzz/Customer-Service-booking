@@ -13,7 +13,6 @@ const mockServices = [
   { id: '2', name: 'Electrician' },
 ]
 
-// Helper: sabai render call ma Router wrap garna
 const renderWithRouter = (ui: React.ReactElement) => {
   return render(<MemoryRouter>{ui}</MemoryRouter>)
 }
