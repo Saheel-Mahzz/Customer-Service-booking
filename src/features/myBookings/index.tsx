@@ -4,6 +4,7 @@ import type { Column } from "../booking/types/columns.type";
 import type { BookingPayload } from "@/api/services/booking";
 import { List } from "@/components/list";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 export const MyBookingsPage = () => {
   const {bookings} = useMyBookings()
   console.log('booking',bookings)
@@ -55,6 +56,12 @@ export const MyBookingsPage = () => {
   return (
 
       <div className="max-w-6xl mx-auto my-8">
+        <Link
+          to="/"
+          className="inline-block mb-4 text-sm font-semibold text-primary hover:underline"
+        >
+          Back to Services
+        </Link>
         <h1 className="text-2xl font-bold text-center">My Bookings</h1>
      <List
         columns={columns}

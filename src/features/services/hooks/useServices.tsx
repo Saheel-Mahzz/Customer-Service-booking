@@ -5,6 +5,7 @@ import { servicesApi } from '@/api/services/servicesApi';
 export interface ServiceFilterParams {
   search?: string;
   maxPrice?: number;
+  category?: string;
 }
 interface ServicesState {
   services: Service[];
@@ -53,7 +54,7 @@ export const useServices = (params?: ServiceFilterParams) => {
     return () => {
       isMounted = false;
     };
-  }, [params?.search, params?.maxPrice]);
+  }, [params?.search, params?.maxPrice, params?.category]);
 
   return state; 
 };

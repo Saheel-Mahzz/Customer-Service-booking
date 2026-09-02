@@ -4,6 +4,7 @@ import { servicesMock } from "../mock/servicesMock";
 export interface ServiceFilterParams {
   search?: string;
   maxPrice?: number;
+  category?: string;
 }
 
 export const servicesApi = {
@@ -19,7 +20,11 @@ export const servicesApi = {
         ? item.price <= params.maxPrice
         : true;
 
-      return matchSearch && matchPrice;
+      const matchCategory = params?.category
+        ? item.category?.toLowerCase() === params.category.toLowerCase()
+        : true;
+
+      return matchSearch && matchPrice && matchCategory;
     });
   },
 

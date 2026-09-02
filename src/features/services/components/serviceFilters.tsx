@@ -43,7 +43,7 @@ export const ServiceFilters = () => {
           value={currentSearch}
           onChange={handleSearchChange}
           placeholder="Search services..."
-          className="pl-9 h-10 border-slate-200"
+          className="pl-9 h-10 border-slate-400"
         />
       </div>
 
@@ -54,9 +54,9 @@ export const ServiceFilters = () => {
             <Button
               key={cat}
               onClick={() => handleCategoryClick(cat)}
-              variant={isActive ? "default" : "outline"}
+              variant={isActive ? "outline" : "default"}
               size="sm"
-              className="rounded-full text-xs font-medium"
+              className="rounded-full text-xs font-medium cursor-pointer"
             >
               {cat}
             </Button>

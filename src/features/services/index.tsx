@@ -7,8 +7,9 @@ export default function Services() {
   const [searchParams] = useSearchParams();
 
   const search = searchParams.get('search') || '';
+  const category = searchParams.get('category') || undefined;
 
-  const { services, loading, error } = useServices({ search });
+  const { services, loading, error } = useServices({ search, category });
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8 text-center">
