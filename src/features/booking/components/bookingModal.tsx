@@ -86,14 +86,18 @@ export const BookingModal = ({ isOpen, onClose, service }: BookingModalProps) =>
 
           <Separator />
 
-          <BookingSummary currency={service.currency} price={service.price} />
+          <BookingSummary
+            date={formData.booking_date}
+            timeSlot={formData.selected_slot}
+            customerName={formData.customer_name}
+          />
         </div>
 
         <DialogFooter className="gap-2 sm:gap-0">
-          <Button variant="outline" onClick={() => onClose(false)}>
+          <Button variant="outline" onClick={() => onClose(false)} className="cursor-pointer">
             Cancel
           </Button>
-          <Button className="gap-2" onClick={handleConfirm} disabled={isLoading }>
+          <Button className="gap-2 bg-black text-white ml-2 cursor-pointer" onClick={handleConfirm} disabled={isLoading }>
             <CheckCircle2 className="w-4 h-4" />
             {isLoading ? "Submitting..." : "Confirm Booking"}
           </Button>
