@@ -30,3 +30,16 @@ VITE_STATIC_API_BASE_URL=/api/v1
 VITE_MOCK_API_BASE_URL=https://<your-mockapi-id>.mockapi.io/api/v1
 
 npm run dev
+  
+  Running Tests
+# Run tests in watch mode
+pnpm run test
+
+# Run tests once (CI mode)
+pnpm run test:run
+
+# Open Vitest UI dashboard
+pnpm run test:ui
+
+# Generate code coverage report
+pnpm run coverage
